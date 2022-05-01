@@ -1,6 +1,6 @@
 import Head from "next/head";
 
-import WorkflowEditor from "../features/Workflows/WorkflowEditor";
+import Workflows from "../features/Workflows/Workflows";
 
 import type { NextPage } from "next";
 
@@ -11,7 +11,7 @@ const Home: NextPage = () => {
         <title>Accord</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <WorkflowEditor />
+      <Workflows />
     </div>
   );
 };

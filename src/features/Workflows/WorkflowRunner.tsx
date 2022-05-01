@@ -10,7 +10,7 @@ interface Props {
   parameters: string[];
 }
 
-export default function WorkflowEditor({ name, workflow, parameters }: Props) {
+export default function WorkflowRunner({ name, workflow, parameters }: Props) {
   const { output, error, isLoading, runWorkflow } = useWorkflow();
   const [paramInputs, setParamInputs] = useState<{ [key: string]: string }>({});
 
@@ -23,25 +23,25 @@ export default function WorkflowEditor({ name, workflow, parameters }: Props) {
   };
 
   return (
-    <div className="flex items-end ">
+    <div className="flex flex-col ">
       {parameters.map((param, index) => (
         <div key={index} className="flex items-center">
+          {/* TODO: Validate that user provides input here (all inputs are required by backend) */}
           <Input
             label={param}
             value={paramInputs[param] || ""}
             onChange={(e) => handleUpdateParam(param, e.target.value)}
-            className="mr-4"
+            className="mr-4 mb-4"
           />
         </div>
       ))}
-      <div className="flex items-center ">
-        <Button className="mr-2" disabled={isLoading} onClick={handleClick}>
+      <div className="flex">
+        <Button className="mr-2 mb-2" disabled={isLoading} onClick={handleClick}>
           {isLoading ? "Loading..." : name}
         </Button>
-
-        {error && <div className="text-red-600">{error}</div>}
-        {output && <div>{output}</div>}
       </div>
+      {error && <div className="text-red-600">Error: {error}</div>}
+      {output && <div>Output: {output}</div>}
     </div>
   );
 }
