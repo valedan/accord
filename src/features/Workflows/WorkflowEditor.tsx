@@ -1,33 +1,55 @@
 import { Workflow } from "../../types";
 import WorkflowRunner from "./WorkflowRunner";
 
-const workflows: Workflow[] = [
+interface WorkflowWithParams {
+  workflow: Workflow;
+  parameters: string[];
+}
+
+const workflows: WorkflowWithParams[] = [
   {
-    entry_point: "hello_world",
-    tasks: {
-      hello_world: {
-        output: "hello world!",
+    workflow: {
+      entry_point: "hello_world",
+      tasks: {
+        hello_world: {
+          output: "hello world!",
+        },
       },
     },
+    parameters: [],
   },
   {
-    entry_point: "hello_name",
-    tasks: {
-      name: {
-        output: "Alan",
-      },
-      hello_name: {
-        output: "hello ${name}!",
+    workflow: {
+      entry_point: "hello_name",
+      tasks: {
+        name: {
+          output: "Alan",
+        },
+        hello_name: {
+          output: "hello ${name}!",
+        },
       },
     },
+    parameters: [],
+  },
+  {
+    workflow: {
+      entry_point: "hello_input",
+      tasks: {
+        hello_input: {
+          output: "hello @{name}!",
+        },
+      },
+    },
+    parameters: ["name"],
   },
 ];
 
 export default function WorkflowEditor() {
   return (
     <div className="m-8 flex flex-col gap-4">
-      {workflows.map((workflow, index) => (
-        <WorkflowRunner key={index} name={`Workflow ${index + 1}`} workflow={workflow} />
+      {workflows.map(({ workflow, parameters }, index) => (
+        <WorkflowRunner key={index} name={`Workflow ${index + 1}`} workflow={workflow} parameters={parameters} />
       ))}
     </div>
   );

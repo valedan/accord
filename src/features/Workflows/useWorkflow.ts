@@ -1,13 +1,13 @@
 import { useState } from "react";
 
-import { Workflow } from "../../types";
+import { Workflow, WorkflowParams } from "../../types";
 
 export const useWorkflow = () => {
   const [output, setOutput] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const runWorkflow = async (workflow: Workflow) => {
+  const runWorkflow = async (workflow: Workflow, parameters: WorkflowParams) => {
     setOutput(null);
     setError(null);
     setIsLoading(true);
@@ -18,7 +18,7 @@ export const useWorkflow = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ workflow }),
+        body: JSON.stringify({ workflow, parameters }),
       });
 
       const { output, error, message }: { output?: string; error?: string; message?: string } = await response.json();
