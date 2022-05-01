@@ -1,7 +1,7 @@
-import Button from "../../components/Button";
-import { useWorkflow } from "./useWorkflow";
+import { Workflow } from "../../types";
+import WorkflowRunner from "./WorkflowRunner";
 
-const workflows = [
+const workflows: Workflow[] = [
   {
     entry_point: "hello_world",
     tasks: {
@@ -10,20 +10,25 @@ const workflows = [
       },
     },
   },
+  {
+    entry_point: "hello_name",
+    tasks: {
+      name: {
+        output: "Alan",
+      },
+      hello_name: {
+        output: "hello ${name}!",
+      },
+    },
+  },
 ];
 
 export default function WorkflowEditor() {
-  const { output, error, isLoading, runWorkflow } = useWorkflow();
-
-  const handleClick = async () => {
-    await runWorkflow(workflows[0]);
-  };
-
   return (
-    <div className="m-8">
-      <Button onClick={handleClick}>Hello world</Button>
-      {error && <div className="text-red-600">{error}</div>}
-      {output && <div>{output}</div>}
+    <div className="m-8 flex flex-col gap-4">
+      {workflows.map((workflow, index) => (
+        <WorkflowRunner key={index} name={`Workflow ${index + 1}`} workflow={workflow} />
+      ))}
     </div>
   );
 }
