@@ -1,5 +1,9 @@
+interface Step {
+  wait: number;
+}
 interface Task {
   output: string;
+  steps?: Step[];
 }
 
 interface TaskCollection {

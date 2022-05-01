@@ -43,6 +43,49 @@ const workflows: WorkflowWithParams[] = [
     },
     parameters: ["name"],
   },
+  {
+    workflow: {
+      entry_point: "slow_goodbye",
+      tasks: {
+        slow_goodbye: {
+          steps: [
+            {
+              wait: 5,
+            },
+          ],
+          output: "goodbye!",
+        },
+      },
+    },
+    parameters: [],
+  },
+  {
+    workflow: {
+      entry_point: "join",
+      tasks: {
+        slow_goodbye: {
+          steps: [
+            {
+              wait: 5,
+            },
+          ],
+          output: "goodbye",
+        },
+        slow_name: {
+          steps: [
+            {
+              wait: 5,
+            },
+          ],
+          output: "Ada",
+        },
+        join: {
+          output: "${slow_goodbye} ${slow_name}!",
+        },
+      },
+    },
+    parameters: [],
+  },
 ];
 
 export default function WorkflowEditor() {

@@ -35,8 +35,8 @@ export default function WorkflowEditor({ name, workflow, parameters }: Props) {
         </div>
       ))}
       <div className="flex items-center ">
-        <Button className="mr-2" onClick={handleClick}>
-          {name}
+        <Button className="mr-2" disabled={isLoading} onClick={handleClick}>
+          {isLoading ? "Loading..." : name}
         </Button>
 
         {error && <div className="text-red-600">{error}</div>}
