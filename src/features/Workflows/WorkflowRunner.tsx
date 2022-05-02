@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Button, Input } from "../../components";
 import { Workflow } from "../../types";
@@ -11,8 +11,13 @@ interface Props {
 }
 
 export default function WorkflowRunner({ name, workflow, parameters }: Props) {
-  const { output, debug, error, isLoading, runWorkflow } = useWorkflow();
+  const { output, debug, error, isLoading, runWorkflow } = useWorkflow(name);
   const [paramInputs, setParamInputs] = useState<{ [key: string]: string }>({});
+
+  // reset the state when the workflow changes
+  useEffect(() => {
+    setParamInputs({});
+  }, [name]);
 
   const handleRunWorkflow = async () => {
     await runWorkflow(workflow, paramInputs);
@@ -27,7 +32,7 @@ export default function WorkflowRunner({ name, workflow, parameters }: Props) {
       handleRunWorkflow();
     }
   };
-  console.log(debug);
+
   return (
     <div className="flex flex-col ">
       {parameters.map((param, index) => (
@@ -48,18 +53,22 @@ export default function WorkflowRunner({ name, workflow, parameters }: Props) {
           disabled={isLoading}
           onClick={handleRunWorkflow}
         >
-          {isLoading ? "Loading..." : name}
+          {isLoading ? "Loading..." : "Execute workflow"}
         </Button>
       </div>
       {error && <div className="text-red-600">Error: {error}</div>}
       {output && <div>Result: {output}</div>}
       <div className="mt-8">
-        {debug.length ? <p>Debug:</p> : null}
-        <div>
-          {debug.map((line, index) => (
-            <div key={index}>{JSON.stringify(line, null, 2)}</div>
-          ))}
-        </div>
+        {debug.length ? (
+          <>
+            <p>Debug:</p>
+            <div className="border-gray-400 border w-1/2 p-2 rounded">
+              {debug.map((line, index) => (
+                <div key={index}>{JSON.stringify(line, null, 2)}</div>
+              ))}
+            </div>
+          </>
+        ) : null}
       </div>
     </div>
   );

@@ -1,20 +1,30 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { TaskResult, Workflow, WorkflowParams } from "../../types";
 
-export const useWorkflow = () => {
+export const useWorkflow = (name: string) => {
   const [output, setOutput] = useState<string | null>(null);
   const [debug, setDebug] = useState<TaskResult[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
+  const reset = () => {
+    setOutput(null);
+    setDebug([]);
+    setError(null);
+    setIsLoading(false);
+  };
+
+  // reset the state when the workflow changes
+  useEffect(() => {
+    reset();
+  }, [name]);
+
   const runWorkflow = async (
     workflow: Workflow,
     parameters: WorkflowParams
   ) => {
-    setOutput(null);
-    setDebug([]);
-    setError(null);
+    reset();
     setIsLoading(true);
 
     try {

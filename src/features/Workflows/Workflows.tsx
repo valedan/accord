@@ -23,7 +23,7 @@ export default function Workflows() {
         ))}
       </Select>
       <WorkflowRunner
-        name="Execute workflow"
+        name={workflows[selectedWorkflowIndex].workflow.entry_point}
         workflow={workflows[selectedWorkflowIndex].workflow}
         parameters={workflows[selectedWorkflowIndex].parameters}
       />
