@@ -6,11 +6,22 @@ interface Props extends React.ComponentProps<"select"> {
   inputClassName?: string;
 }
 
-const Select = ({ className, inputClassName, id, label, hint, children, ...props }: Props) => {
+const Select = ({
+  className,
+  inputClassName,
+  id,
+  label,
+  hint,
+  children,
+  ...props
+}: Props) => {
   return (
     <div className={className}>
       {label && (
-        <label htmlFor={id} className="block text-sm font-medium text-gray-700 mb-1">
+        <label
+          htmlFor={id}
+          className="block text-sm font-medium text-gray-700 mb-1"
+        >
           {label}
         </label>
       )}

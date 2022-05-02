@@ -7,11 +7,23 @@ interface Props extends React.ComponentProps<"input"> {
   inputClassName?: string;
 }
 
-const Input = ({ className, inputClassName, id, label, error, hint, type = "text", ...props }: Props) => {
+const Input = ({
+  className,
+  inputClassName,
+  id,
+  label,
+  error,
+  hint,
+  type = "text",
+  ...props
+}: Props) => {
   return (
     <div className={className}>
       {label && (
-        <label htmlFor={id} className="block text-sm font-medium text-gray-700 mb-1">
+        <label
+          htmlFor={id}
+          className="block text-sm font-medium text-gray-700 mb-1"
+        >
           {label}
         </label>
       )}
@@ -22,8 +34,10 @@ const Input = ({ className, inputClassName, id, label, error, hint, type = "text
           className={classNames(
             "block w-full focus:outline-none sm:text-sm rounded-md shadow",
             {
-              "pr-10 border-red-300 text-red-900 placeholder-red-300 focus:ring-red-500 focus:border-red-500": error,
-              "shadow-sm focus:ring-blue-500 focus:border-blue-500 border-gray-300": !error,
+              "pr-10 border-red-300 text-red-900 placeholder-red-300 focus:ring-red-500 focus:border-red-500":
+                error,
+              "shadow-sm focus:ring-blue-500 focus:border-blue-500 border-gray-300":
+                !error,
             },
             inputClassName
           )}

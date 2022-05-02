@@ -30,6 +30,12 @@ interface TaskCollection {
   [key: string]: Task;
 }
 
+interface TaskResult {
+  task: string;
+  step: number | "output";
+  result: string | number | boolean;
+}
+
 interface WorkflowParams {
   [key: string]: string;
 }
@@ -39,4 +45,4 @@ interface Workflow {
   tasks: TaskCollection;
 }
 
-export type { Task, TaskCollection, Workflow, WorkflowParams };
+export type { Task, TaskCollection, TaskResult, Workflow, WorkflowParams };

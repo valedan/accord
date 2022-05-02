@@ -11,7 +11,7 @@ interface Props {
 }
 
 export default function WorkflowRunner({ name, workflow, parameters }: Props) {
-  const { output, error, isLoading, runWorkflow } = useWorkflow();
+  const { output, debug, error, isLoading, runWorkflow } = useWorkflow();
   const [paramInputs, setParamInputs] = useState<{ [key: string]: string }>({});
 
   const handleRunWorkflow = async () => {
@@ -27,7 +27,7 @@ export default function WorkflowRunner({ name, workflow, parameters }: Props) {
       handleRunWorkflow();
     }
   };
-
+  console.log(debug);
   return (
     <div className="flex flex-col ">
       {parameters.map((param, index) => (
@@ -43,12 +43,24 @@ export default function WorkflowRunner({ name, workflow, parameters }: Props) {
         </div>
       ))}
       <div className="flex">
-        <Button className="mr-2 mb-2" disabled={isLoading} onClick={handleRunWorkflow}>
+        <Button
+          className="mr-2 mb-2"
+          disabled={isLoading}
+          onClick={handleRunWorkflow}
+        >
           {isLoading ? "Loading..." : name}
         </Button>
       </div>
       {error && <div className="text-red-600">Error: {error}</div>}
-      {output && <div>Output: {output}</div>}
+      {output && <div>Result: {output}</div>}
+      <div className="mt-8">
+        {debug.length ? <p>Debug:</p> : null}
+        <div>
+          {debug.map((line, index) => (
+            <div key={index}>{JSON.stringify(line, null, 2)}</div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
