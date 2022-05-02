@@ -108,6 +108,38 @@ const workflows: WorkflowWithParams[] = [
     },
     parameters: ["name"],
   },
+  {
+    workflow: {
+      entry_point: "custom_name_classifier",
+      tasks: {
+        is_name_greater_than_threshold: {
+          steps: [
+            {
+              length: "@{name}",
+            },
+            {
+              gt: ["@{0}", "@{threshold}"] as [string, string],
+            },
+          ],
+        },
+        name_is_long_or_short: {
+          steps: [
+            {
+              if: {
+                condition: "${is_name_greater_than_threshold}",
+                true: "longer than @{threshold}",
+                false: "shorter than @{threshold}",
+              },
+            },
+          ],
+        },
+        custom_name_classifier: {
+          output: "@{name} is ${name_is_long_or_short}",
+        },
+      },
+    },
+    parameters: ["name", "threshold"],
+  },
 ];
 
 export default workflows;
