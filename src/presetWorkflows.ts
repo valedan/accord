@@ -1,9 +1,4 @@
-import { Workflow } from "../../types";
-
-interface WorkflowWithParams {
-  workflow: Workflow;
-  parameters: string[];
-}
+import { WorkflowWithParams } from "./types";
 
 const workflows: WorkflowWithParams[] = [
   {

@@ -45,4 +45,16 @@ interface Workflow {
   tasks: TaskCollection;
 }
 
-export type { Task, TaskCollection, TaskResult, Workflow, WorkflowParams };
+interface WorkflowWithParams {
+  workflow: Workflow;
+  parameters: string[];
+}
+
+export type {
+  Task,
+  TaskCollection,
+  TaskResult,
+  Workflow,
+  WorkflowParams,
+  WorkflowWithParams,
+};

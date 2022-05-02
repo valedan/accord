@@ -40,6 +40,7 @@ export default function WorkflowRunner({ name, workflow, parameters }: Props) {
           {/* TODO: Validate that user provides input here (all inputs are required by backend) */}
           <Input
             label={param}
+            id={param}
             value={paramInputs[param] || ""}
             onChange={(e) => handleUpdateParam(param, e.target.value)}
             className="mr-4 mb-4"

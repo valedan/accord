@@ -1,10 +1,14 @@
 import { useState } from "react";
 
 import Select from "../../components/Select";
-import workflows from "./presetWorkflows";
+import { WorkflowWithParams } from "../../types";
 import WorkflowRunner from "./WorkflowRunner";
 
-export default function Workflows() {
+interface Props {
+  workflows: WorkflowWithParams[];
+}
+
+export default function Workflows({ workflows }: Props) {
   const [selectedWorkflowIndex, setSelectedWorkflowIndex] = useState(0);
 
   return (
@@ -12,8 +16,9 @@ export default function Workflows() {
       <Select
         id="workflow"
         name="workflow"
+        label="Select a workflow"
         onChange={(e) => setSelectedWorkflowIndex(Number(e.target.value))}
-        defaultValue={selectedWorkflowIndex}
+        value={selectedWorkflowIndex}
         className="w-64 mb-8"
       >
         {workflows.map(({ workflow }, index) => (
