@@ -60,7 +60,7 @@ export const useWorkflow = (name: string) => {
       }
 
       if (error) {
-        setError(`${error} ${message}`);
+        setError(`${message}`);
       }
     } catch (error) {
       console.log(error);

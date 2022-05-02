@@ -58,12 +58,12 @@ export default function WorkflowRunner({ name, workflow, parameters }: Props) {
         </Button>
       </div>
       {error && <div className="text-red-600">Error: {error}</div>}
-      {output && <div>Result: {output}</div>}
+      {output && <div className={"font-bold"}>Result: {output}</div>}
       <div className="mt-8">
         {debug.length ? (
           <>
             <p>Debug:</p>
-            <div className="border-gray-400 border w-1/2 p-2 rounded">
+            <div className="border-gray-400 border w-2/3 p-2 rounded">
               {debug.map((line, index) => (
                 <div key={index}>{JSON.stringify(line, null, 2)}</div>
               ))}

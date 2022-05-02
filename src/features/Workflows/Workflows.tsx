@@ -12,7 +12,7 @@ export default function Workflows({ workflows }: Props) {
   const [selectedWorkflowIndex, setSelectedWorkflowIndex] = useState(0);
 
   return (
-    <div className="m-8 flex flex-col">
+    <div className="ml-16 mt-16 flex flex-col">
       <Select
         id="workflow"
         name="workflow"
