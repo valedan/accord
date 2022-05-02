@@ -1,34 +1,56 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Project setup
 
-## Getting Started
+First ensure the backend is setup and running
 
-First, run the development server:
+Install dependencies:
 
-```bash
-npm run dev
-# or
-yarn dev
+```
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Run the app:
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+```
+npm run dev
+```
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+Run the tests:
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+```
+npm run test
+```
 
-## Learn More
+# Description
 
-To learn more about Next.js, take a look at the following resources:
+Accord implements most of the requirements outlined in the challenge doc. The backend will execute workflows defined in the declarative language, and the frontend provides a simple interface for running predefined workflows and viewing the results. This would serve as a proof of concept for the declarative language and/or execution engine before building a full production app.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Step 10
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+For step 10, I came up with the following list of features needed in the declarative language:
 
-## Deploy on Vercel
+- Full interpolation support for steps (ie reference user input or other tasks in steps)
+- Ability to run steps in parallel by passing an array for a particular step.
+- And/Or/Not steps
+- lessThan, equalTo
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Other features would depend mostly on the domain we're building this for (ie maybe we need a step to search a publication database).
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+I decided to implement the top feature (full interpolation support), because it would allow much more flexibility in structuring the workflow, as well as customizing it based on user input. The `custom_name_classifier` workflow takes advantage of this feature.
+
+# TODO
+
+I skipped some parts of the challenge due to time constraints:
+
+- Step 8, streaming results I skipped completely. Given more time I would implement this over websockets with [fastify-websocket](https://github.com/fastify/fastify-websocket).
+- Step 9, making the UI look nice. I had already added a little bit of polish in previous steps, and I tidied things up a little bit at the end, but I didn't make any significant changes in step 9. I think the current state of the UI is reasonable for a small POC like this.
+
+I also did not add as much test coverage as I would normally like to for a production app. I relied mostly on integration tests because they give the best tradeoff between test coverage and time investment. The current tests are enough to give me reasonable confidence in the functionality and allow easy refactoring, but if I had more time I would like to add some unit tests too.
+
+There are also many TODO comments throughout the codebase for small things or refactors that I would like to do given more time.
+
+Of course, if this was a production app there would be MANY more features required. A few of the top ones:
+
+- UI for users to define their own workflows
+- Ability to save workflows (we'll need a database)
+- Use saved workflows as building blocks of new workflows
+- Overhaul task execution architecture to handle tasks that can run for hours. Each task and step should run independently, and should handle retries due to network errors.
