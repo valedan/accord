@@ -2,6 +2,13 @@ import { useEffect, useState } from "react";
 
 import { TaskResult, Workflow, WorkflowParams } from "../../types";
 
+interface WorkflowAPIResponse {
+  output?: string;
+  debug?: TaskResult[];
+  error?: string;
+  message?: string;
+}
+
 export const useWorkflow = (name: string) => {
   const [output, setOutput] = useState<string | null>(null);
   const [debug, setDebug] = useState<TaskResult[]>([]);
@@ -39,17 +46,8 @@ export const useWorkflow = (name: string) => {
         }
       );
 
-      const {
-        output,
-        debug,
-        error,
-        message,
-      }: {
-        output?: string;
-        debug?: TaskResult[];
-        error?: string;
-        message?: string;
-      } = await response.json();
+      const { output, debug, error, message }: WorkflowAPIResponse =
+        await response.json();
 
       if (output) {
         setOutput(output);
