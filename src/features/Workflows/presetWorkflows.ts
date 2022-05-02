@@ -85,6 +85,34 @@ const workflows: WorkflowWithParams[] = [
     },
     parameters: [],
   },
+  {
+    workflow: {
+      entry_point: "name_classifier",
+      tasks: {
+        name_is_long_or_short: {
+          steps: [
+            {
+              length: "@{name}",
+            },
+            {
+              gt: ["@{0}", 7],
+            },
+            {
+              if: {
+                condition: "@{0}",
+                true: "long name",
+                false: "short name",
+              },
+            },
+          ],
+        },
+        name_classifier: {
+          output: "@{name} is a ${name_is_long_or_short}",
+        },
+      },
+    },
+    parameters: ["name"],
+  },
 ];
 
 export default workflows;

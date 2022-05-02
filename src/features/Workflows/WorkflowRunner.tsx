@@ -14,12 +14,18 @@ export default function WorkflowRunner({ name, workflow, parameters }: Props) {
   const { output, error, isLoading, runWorkflow } = useWorkflow();
   const [paramInputs, setParamInputs] = useState<{ [key: string]: string }>({});
 
-  const handleClick = async () => {
+  const handleRunWorkflow = async () => {
     await runWorkflow(workflow, paramInputs);
   };
 
   const handleUpdateParam = (key: string, value: string) => {
     setParamInputs({ ...paramInputs, [key]: value });
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key === "Enter") {
+      handleRunWorkflow();
+    }
   };
 
   return (
@@ -32,11 +38,12 @@ export default function WorkflowRunner({ name, workflow, parameters }: Props) {
             value={paramInputs[param] || ""}
             onChange={(e) => handleUpdateParam(param, e.target.value)}
             className="mr-4 mb-4"
+            onKeyDown={handleKeyDown}
           />
         </div>
       ))}
       <div className="flex">
-        <Button className="mr-2 mb-2" disabled={isLoading} onClick={handleClick}>
+        <Button className="mr-2 mb-2" disabled={isLoading} onClick={handleRunWorkflow}>
           {isLoading ? "Loading..." : name}
         </Button>
       </div>
